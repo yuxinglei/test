@@ -1,65 +1,230 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给我的宝贝 ❤️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #fff0f5;
-            font-family: "Microsoft Yahei", sans-serif;
-            text-align: center;
-            padding-top: 80px;
-            overflow-x: hidden;
-        }
-        .title {
-            font-size: 28px;
-            color: #ff5e8f;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .text {
-            font-size: 18px;
-            color: #555;
-            line-height: 1.8;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-        .heart {
-            color: #ff477e;
-            font-size: 40px;
-            animation: beat 1s infinite alternate;
-        }
-        @keyframes beat {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
-        }
-        .from {
-            margin-top: 60px;
-            font-size: 16px;
-            color: #888;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>致韩蓉 ❤️</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:linear-gradient(135deg,#ffc0e5 0%,#e2c9ff 50%,#b8d8ff 100%);
+  min-height:100vh;
+  text-align:center;
+  padding:70px 20px;
+  /* 这里恢复滚动，去掉了隐藏 */
+  overflow-x: hidden;
+  color:#222;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.heart{
+  font-size:70px;
+  margin:20px 0;
+  animation:beat 1.1s infinite alternate ease-in-out;
+  display:inline-block;
+  text-shadow:0 0 20px rgba(255,0,80,0.4)
+}
+@keyframes beat{
+  0%{transform:scale(1)}
+  100%{transform:scale(1.28)}
+}
+
+.title{
+  font-size:34px;
+  color:#d81b50;
+  font-weight:bold;
+  margin-bottom:30px;
+  letter-spacing:2px;
+  opacity:0;
+  animation:fadeIn 1.2s 0.3s forwards;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+.card{
+  background:rgba(255,255,255,0.88);
+  border-radius:28px;
+  padding:45px 35px;
+  max-width:520px;
+  margin:0 auto 35px;
+  box-shadow:0 12px 35px rgba(0,0,0,0.1);
+  backdrop-filter:blur(12px);
+  opacity:0;
+  animation:fadeIn 1.2s 0.6s forwards;
+}
+.content{
+  font-size:19px;
+  line-height:2.1;
+  color:#333;
+  min-height:260px;
+  white-space:pre-wrap;
+}
+
+.from{
+  font-size:20px;
+  color:#d81b50;
+  font-weight:bold;
+  margin-top:30px;
+  opacity:0;
+  animation:fadeIn 1.2s 0.9s forwards;
+  /* 增加底部间距，小手机也能看到 */
+  margin-bottom:60px;
+}
+
+.heart-fall{
+  position:fixed;
+  top:-10vh;
+  user-select:none;
+  animation:fall linear forwards;
+  color:#ff5d8f;
+  z-index:-1;
+}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
+
+.star{
+  position:fixed;
+  width:4px;
+  height:4px;
+  background:#fff;
+  border-radius:50%;
+  animation:twinkle 2s infinite alternate ease-in-out;
+  z-index:-1;
+}
+@keyframes twinkle{0%{opacity:0.3}100%{opacity:1}}
+
+/* 烟花画布 */
+#fireworks{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:999;
+}
+</style>
 </head>
+
 <body>
+<canvas id="fireworks"></canvas>
 
 <div class="heart">❤️</div>
-<div class="title">致我最爱的宝贝 韩蓉</div>
-<div class="text">
-    遇见你之后，世界都变得温柔了。<br>
-    想把所有的浪漫和偏爱都给你，<br>
-    岁岁年年，朝朝暮暮，<br>
-    我只想一直陪着你。
-</div>
-<div class="heart">💌</div>
-<div class="from">
-    永远爱你的 雷总 ❤️
+<div class="title">致 我 最 爱 的 韩 蓉</div>
+
+<div class="card">
+  <div class="content" id="text"></div>
 </div>
 
+<div class="from">爱你的雷哥 💌</div>
+
+<script>
+// 打字机效果
+const text = `人海十万里
+我只奔向你
+
+不用质疑我对你的好
+我所有的温柔与偏爱
+都是为你专属准备
+
+往后余生
+风雨是你，温柔是你
+满心欢喜，都是你`;
+
+const el = document.getElementById('text');
+let i = 0;
+function typing(){
+  if(i < text.length){
+    el.textContent += text.charAt(i);
+    i++;
+    setTimeout(typing, 60);
+  }
+}
+typing();
+
+// 爱心飘落
+function createHeart(){
+  const h=document.createElement('div')
+  h.innerText=['❤️','💖','💗','💓'][Math.floor(Math.random()*4)]
+  h.className='heart-fall'
+  const s=Math.random()*18+12
+  h.style.fontSize=s+'px'
+  h.style.left=Math.random()*100+'vw'
+  h.style.animationDuration=Math.random()*4+4+'s'
+  document.body.appendChild(h)
+  setTimeout(()=>h.remove(),8000)
+}
+setInterval(createHeart,280)
+
+// 星星
+function createStar(){
+  const s=document.createElement('div')
+  s.className='star'
+  s.style.left=Math.random()*100+'vw'
+  s.style.top=Math.random()*100+'vh'
+  s.style.animationDelay=Math.random()*2+'s'
+  document.body.appendChild(s)
+  setTimeout(()=>s.remove(),10000)
+}
+for(let i=0;i<60;i++)createStar()
+
+// 点击烟花
+const canvas = document.getElementById('fireworks');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+class Particle {
+  constructor(x,y,color){
+    this.x=x;this.y=y;
+    this.speed=Math.random()*3+2;
+    this.angle=Math.random()*Math.PI*2;
+    this.gravity=0.05;
+    this.vx=Math.cos(this.angle)*this.speed;
+    this.vy=Math.sin(this.angle)*this.speed;
+    this.alpha=1;
+    this.color=color;
+  }
+  update(){
+    this.vy+=this.gravity;
+    this.x+=this.vx;
+    this.y+=this.vy;
+    this.alpha-=0.015;
+  }
+  draw(){
+    ctx.globalAlpha=this.alpha;
+    ctx.fillStyle=this.color;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,2,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+
+let particles=[];
+const colors=['#ff5e8f','#ff7b9f','#e272d2','#a88cff','#72d5ff'];
+
+function createFireworks(x,y){
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  for(let i=0;i<100;i++) particles.push(new Particle(x,y,color));
+}
+
+document.addEventListener('click',(e)=>{
+  createFireworks(e.clientX,e.clientY);
+});
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i)=>{
+    p.update();p.draw();
+    if(p.alpha<=0) particles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+</script>
 </body>
 </html>
