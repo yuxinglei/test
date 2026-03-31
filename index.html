@@ -3,228 +3,155 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>致韩蓉 ❤️</title>
+<title>韓蓉 ╋ 雷哥 ╋ 一生一世不分离</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
-  background:linear-gradient(135deg,#ffc0e5 0%,#e2c9ff 50%,#b8d8ff 100%);
+  font-family:"微软雅黑",sans-serif;
+  background:#111;
+  background-image:linear-gradient(45deg,#000 25%,#222 25%,#222 50%,#000 50%,#000 75%,#222 75%,#222);
+  background-size:40px 40px;
   min-height:100vh;
   text-align:center;
-  padding:70px 20px;
-  /* 这里恢复滚动，去掉了隐藏 */
-  overflow-x: hidden;
-  color:#222;
+  padding:60px 20px;
+  overflow-x:hidden;
+  color:#ff44cc;
   -webkit-tap-highlight-color:transparent;
 }
-
 .heart{
-  font-size:70px;
+  font-size:80px;
   margin:20px 0;
-  animation:beat 1.1s infinite alternate ease-in-out;
+  animation:beat 1s infinite alternate;
   display:inline-block;
-  text-shadow:0 0 20px rgba(255,0,80,0.4)
+  text-shadow:0 0 15px #ff0088,0 0 30px #ff0088;
 }
 @keyframes beat{
   0%{transform:scale(1)}
-  100%{transform:scale(1.28)}
+  100%{transform:scale(1.3)}
 }
-
 .title{
-  font-size:34px;
-  color:#d81b50;
+  font-size:36px;
+  color:#ff33cc;
   font-weight:bold;
+  text-shadow:2px 2px 5px #000,0 0 20px #ff00cc;
   margin-bottom:30px;
-  letter-spacing:2px;
-  opacity:0;
-  animation:fadeIn 1.2s 0.3s forwards;
+  letter-spacing:3px;
 }
-@keyframes fadeIn{to{opacity:1}}
-
 .card{
-  background:rgba(255,255,255,0.88);
-  border-radius:28px;
-  padding:45px 35px;
+  background:rgba(0,0,0,0.7);
+  border:3px solid #ff33cc;
+  border-radius:10px;
+  padding:40px 30px;
   max-width:520px;
-  margin:0 auto 35px;
-  box-shadow:0 12px 35px rgba(0,0,0,0.1);
-  backdrop-filter:blur(12px);
-  opacity:0;
-  animation:fadeIn 1.2s 0.6s forwards;
+  margin:0 auto 40px;
+  box-shadow:0 0 30px #ff0088;
 }
 .content{
-  font-size:19px;
-  line-height:2.1;
-  color:#333;
-  min-height:260px;
-  white-space:pre-wrap;
-}
-
-.from{
   font-size:20px;
-  color:#d81b50;
-  font-weight:bold;
-  margin-top:30px;
-  opacity:0;
-  animation:fadeIn 1.2s 0.9s forwards;
-  /* 增加底部间距，小手机也能看到 */
-  margin-bottom:60px;
+  line-height:2.2;
+  color:#ff66bb;
+  text-shadow:1px 1px 3px #000;
+  white-space:pre-wrap;
+  min-height:280px;
 }
-
+.from{
+  font-size:24px;
+  color:#ff0066;
+  font-weight:bold;
+  text-shadow:0 0 15px #ff0066;
+  margin-bottom:80px;
+}
 .heart-fall{
   position:fixed;
   top:-10vh;
   user-select:none;
   animation:fall linear forwards;
-  color:#ff5d8f;
   z-index:-1;
+  color:#ff33cc;
 }
 @keyframes fall{to{transform:translateY(110vh);opacity:0}}
-
-.star{
-  position:fixed;
-  width:4px;
-  height:4px;
-  background:#fff;
-  border-radius:50%;
-  animation:twinkle 2s infinite alternate ease-in-out;
-  z-index:-1;
-}
-@keyframes twinkle{0%{opacity:0.3}100%{opacity:1}}
-
-/* 烟花画布 */
 #fireworks{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  top:0;left:0;
+  width:100%;height:100%;
   pointer-events:none;
   z-index:999;
 }
 </style>
 </head>
-
 <body>
 <canvas id="fireworks"></canvas>
+<!-- 背景音乐：已替换为稳定直链，微信点屏即播 -->
+<audio id="bgm" src="https://www.kozco.com/tech/piano2-CoolEdit.mp3" loop>
 
 <div class="heart">❤️</div>
-<div class="title">致 我 最 爱 的 韩 蓉</div>
-
+<div class="title">╄→ 韓蓉，硪噯伱 ←╄</div>
 <div class="card">
   <div class="content" id="text"></div>
 </div>
-
-<div class="from">爱你的雷哥 💌</div>
+<div class="from">╄→ 永遠愛妳的雷哥 ←╄</div>
 
 <script>
+// 微信兼容：点击/触摸屏幕播放音乐
+window.addEventListener('touchstart',()=>{document.getElementById('bgm').play()},{once:true});
+window.addEventListener('click',()=>{document.getElementById('bgm').play()},{once:true});
+
+// 非主流打字机文案
+const text = `╋━━━━━━━━━━━╋
+  硪對妳的愛
+  上線隱身對其可見
+  離線永遠對妳思念
+╋━━━━━━━━━━━╋
+
+  人海十萬里
+  硪只認妳一人
+
+  不離不棄
+  不騙不傷
+  這一生
+  硪只寵韓蓉壹個人
+
+  若有違背
+  天打雷劈 不得好死
+╋━━━━━━━━━━━╋`;
 // 打字机效果
-const text = `人海十万里
-我只奔向你
-
-不用质疑我对你的好
-我所有的温柔与偏爱
-都是为你专属准备
-
-往后余生
-风雨是你，温柔是你
-满心欢喜，都是你`;
-
-const el = document.getElementById('text');
-let i = 0;
-function typing(){
-  if(i < text.length){
-    el.textContent += text.charAt(i);
-    i++;
-    setTimeout(typing, 60);
-  }
-}
+let i=0;const el=document.getElementById('text');
+function typing(){if(i<text.length){el.textContent+=text[i];i++;setTimeout(typing,50);}}
 typing();
 
 // 爱心飘落
 function createHeart(){
-  const h=document.createElement('div')
-  h.innerText=['❤️','💖','💗','💓'][Math.floor(Math.random()*4)]
-  h.className='heart-fall'
-  const s=Math.random()*18+12
-  h.style.fontSize=s+'px'
-  h.style.left=Math.random()*100+'vw'
-  h.style.animationDuration=Math.random()*4+4+'s'
-  document.body.appendChild(h)
-  setTimeout(()=>h.remove(),8000)
+  const h=document.createElement('div');
+  h.innerText=['❤️','💔','💖','💕','💘'][Math.floor(Math.random()*5)];
+  h.className='heart-fall';
+  h.style.fontSize=(Math.random()*20+15)+'px';
+  h.style.left=(Math.random()*100)+'vw';
+  h.style.animationDuration=(Math.random()*4+4)+'s';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
 }
-setInterval(createHeart,280)
+setInterval(createHeart,300);
 
-// 星星
-function createStar(){
-  const s=document.createElement('div')
-  s.className='star'
-  s.style.left=Math.random()*100+'vw'
-  s.style.top=Math.random()*100+'vh'
-  s.style.animationDelay=Math.random()*2+'s'
-  document.body.appendChild(s)
-  setTimeout(()=>s.remove(),10000)
+// 点击烟花特效
+const canvas=document.getElementById('fireworks'),ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+class Particle{
+  constructor(x,y,c){this.x=x;this.y=y;this.c=c;this.s=Math.random()*3+2;this.a=Math.random()*Math.PI*2;this.g=0.05;this.vx=Math.cos(this.a)*this.s;this.vy=Math.sin(this.a)*this.s;this.al=1;}
+  update(){this.vy+=this.g;this.x+=this.vx;this.y+=this.vy;this.al-=0.015;}
+  draw(){ctx.globalAlpha=this.al;ctx.fillStyle=this.c;ctx.arc(this.x,this.y,2,0,Math.PI*2);ctx.fill();}
 }
-for(let i=0;i<60;i++)createStar()
-
-// 点击烟花
-const canvas = document.getElementById('fireworks');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-class Particle {
-  constructor(x,y,color){
-    this.x=x;this.y=y;
-    this.speed=Math.random()*3+2;
-    this.angle=Math.random()*Math.PI*2;
-    this.gravity=0.05;
-    this.vx=Math.cos(this.angle)*this.speed;
-    this.vy=Math.sin(this.angle)*this.speed;
-    this.alpha=1;
-    this.color=color;
-  }
-  update(){
-    this.vy+=this.gravity;
-    this.x+=this.vx;
-    this.y+=this.vy;
-    this.alpha-=0.015;
-  }
-  draw(){
-    ctx.globalAlpha=this.alpha;
-    ctx.fillStyle=this.color;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,2,0,Math.PI*2);
-    ctx.fill();
-  }
-}
-
-let particles=[];
-const colors=['#ff5e8f','#ff7b9f','#e272d2','#a88cff','#72d5ff'];
-
-function createFireworks(x,y){
-  const color=colors[Math.floor(Math.random()*colors.length)];
-  for(let i=0;i<100;i++) particles.push(new Particle(x,y,color));
-}
-
-document.addEventListener('click',(e)=>{
-  createFireworks(e.clientX,e.clientY);
+let ps=[];const cs=['#ff33cc','#ff0066','#ff66bb','#cc00ff','#ff2299'];
+document.addEventListener('click',e=>{
+  const c=cs[Math.floor(Math.random()*cs.length)];
+  for(let i=0;i<100;i++)ps.push(new Particle(e.clientX,e.clientY,c));
 });
-
-function animate(){
+function ani(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach((p,i)=>{
-    p.update();p.draw();
-    if(p.alpha<=0) particles.splice(i,1);
-  });
-  requestAnimationFrame(animate);
+  ps.forEach((p,i)=>{p.update();p.draw();if(p.al<=0)ps.splice(i,1);});
+  requestAnimationFrame(ani);
 }
-animate();
-
-window.addEventListener('resize',()=>{
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-});
+ani();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 </script>
 </body>
 </html>
