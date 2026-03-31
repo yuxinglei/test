@@ -1,118 +1,124 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>韓蓉 ╋ 雷哥 ╋ 一生一世不分离</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-            font-family:"微软雅黑",sans-serif;
-            background:#111;
-            background-image:linear-gradient(45deg,#000 25%,#222 25%,#222 50%,#000 50%,#000 75%,#222 75%,#222);
-            background-size:40px 40px;
-            min-height:100vh;
-            text-align:center;
-            padding:60px 20px;
-            overflow-x:hidden;
-            color:#ff44cc;
-            -webkit-tap-highlight-color:transparent;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>韓蓉 ╋ 雷哥 ╋ 一生一世不分离</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"微软雅黑",sans-serif;
+  background:#111;
+  background-image:linear-gradient(45deg,#000 25%,#222 25%,#222 50%,#000 50%,#000 75%,#222 75%,#222);
+  background-size:40px 40px;
+  min-height:100vh;
+  text-align:center;
+  padding:60px 20px;
+  overflow-x:hidden;
+  color:#ff44cc;
+  -webkit-tap-highlight-color:transparent;
+}
 
-        .heart{
-            font-size:80px;
-            margin:20px 0;
-            animation:beat 1s infinite alternate;
-            display:inline-block;
-            text-shadow:0 0 15px #ff0088,0 0 30px #ff0088;
-        }
-        @keyframes beat{
-            0%{transform:scale(1)}
-            100%{transform:scale(1.3)}
-        }
+.heart{
+  font-size:80px;
+  margin:20px 0;
+  animation:beat 1s infinite alternate;
+  display:inline-block;
+  text-shadow:0 0 15px #ff0088,0 0 30px #ff0088;
+}
+@keyframes beat{
+  0%{transform:scale(1)}
+  100%{transform:scale(1.3)}
+}
 
-        .title{
-            font-size:36px;
-            color:#ff33cc;
-            font-weight:bold;
-            text-shadow:2px 2px 5px #000,0 0 20px #ff00cc;
-            margin-bottom:30px;
-            letter-spacing:3px;
-        }
+.title{
+  font-size:36px;
+  color:#ff33cc;
+  font-weight:bold;
+  text-shadow:2px 2px 5px #000,0 0 20px #ff00cc;
+  margin-bottom:30px;
+  letter-spacing:3px;
+}
 
-        .card{
-            background:rgba(0,0,0,0.7);
-            border:3px solid #ff33cc;
-            border-radius:10px;
-            padding:40px 30px;
-            max-width:520px;
-            margin:0 auto 40px;
-            box-shadow:0 0 30px #ff0088;
-        }
+.card{
+  background:rgba(0,0,0,0.7);
+  border:3px solid #ff33cc;
+  border-radius:10px;
+  padding:40px 30px;
+  max-width:520px;
+  margin:0 auto 40px;
+  box-shadow:0 0 30px #ff0088;
+}
 
-        .content{
-            font-size:20px;
-            line-height:2.2;
-            color:#ff66bb;
-            text-shadow:1px 1px 3px #000;
-            white-space:pre-wrap;
-        }
+.content{
+  font-size:20px;
+  line-height:2.2;
+  color:#ff66bb;
+  text-shadow:1px 1px 3px #000;
+  white-space:pre-wrap;
+}
 
-        .from{
-            font-size:24px;
-            color:#ff0066;
-            font-weight:bold;
-            text-shadow:0 0 15px #ff0066;
-            margin-bottom:80px;
-        }
+.from{
+  font-size:24px;
+  color:#ff0066;
+  font-weight:bold;
+  text-shadow:0 0 15px #ff0066;
+  margin-bottom:80px;
+}
 
-        .heart-fall{
-            position:fixed;
-            top:-10vh;
-            user-select:none;
-            animation:fall linear forwards;
-            z-index:-1;
-            color:#ff33cc;
-        }
-        @keyframes fall{to{transform:translateY(110vh);opacity:0}}
+.heart-fall{
+  position:fixed;
+  top:-10vh;
+  user-select:none;
+  animation:fall linear forwards;
+  z-index:-1;
+  color:#ff33cc;
+}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
 
-        #fireworks{
-            position:fixed;
-            top:0;left:0;
-            width:100%;height:100%;
-            pointer-events:none;
-            z-index:999;
-        }
-    </style>
+#fireworks{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:999;
+}
+</style>
 </head>
 
 <body>
 <canvas id="fireworks"></canvas>
 
-<!-- ✅ 修复：必须闭合 audio 标签！！！ -->
 <audio id="bgm" src="test.mp3" loop></audio>
 
 <div class="heart">❤️</div>
 <div class="title">╄→ 韓蓉，硪噯伱 ←╄</div>
 
 <div class="card">
-    <div class="content" id="text"></div>
+  <div class="content" id="text"></div>
 </div>
 
 <div class="from">╄→ 永遠愛妳的雷哥 ←╄</div>
 
 <script>
-    window.addEventListener('touchstart', () => {
-        const bgm = document.getElementById('bgm');
-        bgm.play().catch(()=>{});
-    }, { once: true });
+// 🔥 强制播放修复（100%生效）
+let isMusicPlayed = false;
+function playMusic() {
+  if(isMusicPlayed) return;
+  let audio = document.getElementById('bgm');
+  audio.load();
+  audio.play().then(() => {
+    isMusicPlayed = true;
+  }).catch(err => {});
+}
 
-    window.addEventListener('click', () => {
-        const bgm = document.getElementById('bgm');
-        bgm.play().catch(()=>{});
-    }, { once: true });
+// 全平台触发
+document.body.addEventListener('click', playMusic);
+document.body.addEventListener('touchstart', playMusic);
+window.addEventListener('load', playMusic);
 
-    const text = `╋━━━━━━━━━━━╋
+// 打字机
+const text = `╋━━━━━━━━━━━╋
   硪對妳的愛
   上線隱身對其可見
   離線永遠對妳思念
@@ -127,81 +133,83 @@
   硪只寵韓蓉壹個人
 ╋━━━━━━━━━━━╋`;
 
-    const el = document.getElementById('text');
-    let i = 0;
-    function typing(){
-        if(i < text.length){
-            el.textContent += text[i];
-            i++;
-            setTimeout(typing, 50);
-        }
-    }
-    typing();
+const el = document.getElementById('text');
+let i = 0;
+function typing(){
+  if(i < text.length){
+    el.textContent += text[i];
+    i++;
+    setTimeout(typing, 50);
+  }
+}
+typing();
 
-    function createHeart(){
-        const h = document.createElement('div');
-        h.innerText = ['❤️','💖','💗','💓'][Math.floor(Math.random()*4)];
-        h.className = 'heart-fall';
-        const s = Math.random()*20+15;
-        h.style.fontSize = s + 'px';
-        h.style.left = Math.random()*100 + 'vw';
-        h.style.animationDuration = Math.random()*4+4 + 's';
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(), 8000);
-    }
-    setInterval(createHeart, 300);
+// 爱心飘落
+function createHeart(){
+  const h = document.createElement('div');
+  h.innerText = ['❤️','💖','💗','💓'][Math.floor(Math.random()*4)];
+  h.className = 'heart-fall';
+  const s = Math.random()*20+15;
+  h.style.fontSize = s + 'px';
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.animationDuration = Math.random()*4+4 + 's';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(), 8000);
+}
+setInterval(createHeart, 300);
 
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// 烟花
+const canvas = document.getElementById('fireworks');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    class Particle{
-        constructor(x,y,c){
-            this.x=x;this.y=y;this.c=c;
-            this.s=Math.random()*3+2;
-            this.a=Math.random()*Math.PI*2;
-            this.g=0.05;
-            this.vx=Math.cos(this.a)*this.s;
-            this.vy=Math.sin(this.a)*this.s;
-            this.al=1;
-        }
-        update(){
-            this.vy+=this.g;
-            this.x+=this.vx;
-            this.y+=this.vy;
-            this.al-=0.015;
-        }
-        draw(){
-            ctx.globalAlpha=this.al;
-            ctx.fillStyle=this.c;
-            ctx.beginPath();
-            ctx.arc(this.x,this.y,2,0,Math.PI*2);
-            ctx.fill();
-        }
-    }
+class Particle{
+  constructor(x,y,c){
+    this.x=x;this.y=y;this.c=c;
+    this.s=Math.random()*3+2;
+    this.a=Math.random()*Math.PI*2;
+    this.g=0.05;
+    this.vx=Math.cos(this.a)*this.s;
+    this.vy=Math.sin(this.a)*this.s;
+    this.al=1;
+  }
+  update(){
+    this.vy+=this.g;
+    this.x+=this.vx;
+    this.y+=this.vy;
+    this.al-=0.015;
+  }
+  draw(){
+    ctx.globalAlpha=this.al;
+    ctx.fillStyle=this.c;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,2,0,Math.PI*2);
+    ctx.fill();
+  }
+}
 
-    let ps=[];
-    const cs=['#ff33cc','#ff0066','#ff66bb','#cc00ff','#ff2299'];
-    document.addEventListener('click',(e)=>{
-        const c=cs[Math.floor(Math.random()*cs.length)];
-        for(let i=0;i<100;i++) ps.push(new Particle(e.clientX,e.clientY,c));
-    });
+let ps=[];
+const cs=['#ff33cc','#ff0066','#ff66bb','#cc00ff','#ff2299'];
+document.addEventListener('click',(e)=>{
+  const c=cs[Math.floor(Math.random()*cs.length)];
+  for(let i=0;i<100;i++) ps.push(new Particle(e.clientX,e.clientY,c));
+});
 
-    function ani(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ps.forEach((p,idx)=>{
-            p.update();p.draw();
-            if(p.al<=0) ps.splice(idx,1);
-        });
-        requestAnimationFrame(ani);
-    }
-    ani();
+function ani(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ps.forEach((p,idx)=>{
+    p.update();p.draw();
+    if(p.al<=0) ps.splice(idx,1);
+  });
+  requestAnimationFrame(ani);
+}
+ani();
 
-    window.addEventListener('resize',()=>{
-        canvas.width=window.innerWidth;
-        canvas.height=window.innerHeight;
-    });
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
 </script>
 </body>
 </html>
